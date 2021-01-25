@@ -22,7 +22,7 @@ class BoardOffline(BoardGUI):
         # AI class
         # AI 类
         self.ai_class = None
-        # git remote add origin git@gitee.com:guo_zhanyu/omega-go-plus.git
+
         # 选择颜色的窗口
         self.Choose = QMainWindow()
         self.ChooseUI = Choose.Ui_MainWindow()
