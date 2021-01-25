@@ -11,8 +11,8 @@
 
 #### 安装教程
 
-1.  (-i https://pypi.douban.com/simple)
-2.  xxxx
+1.  pip ... -i https://pypi.douban.com/simple
+2.  pip freeze > requirements.txt
 3.  xxxx
 
 #### 使用说明

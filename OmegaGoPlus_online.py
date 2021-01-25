@@ -50,6 +50,9 @@ class BoardClient(BoardGUI):
         :param lines: The dimension of the board.
         """
         super(BoardClient, self).__init__(lines)
+
+        self.MainWindowUI.lineEditLocalIP.setText(self.getLocalIP())
+
         # Who am i
         self.who_am_i = None
 
@@ -127,9 +130,9 @@ class BoardClient(BoardGUI):
         """
         self.who_am_i = BLACK_CHESSMAN
         if self.player_num == 2:
-            self.ai_class = aiGzy3.AI(self._lines, self.who_am_i)
+            self.ai_class = ai_2.AI(self._lines, self.who_am_i)
         elif self.player_num == 3:
-            self.ai_class = aiGst.AI(self._lines, self.who_am_i)
+            self.ai_class = ai_3.AI(self._lines, self.who_am_i)
             pass
 
         self.setWindowTitle('Omega Black')
@@ -145,9 +148,9 @@ class BoardClient(BoardGUI):
         """
         self.who_am_i = WHITE_CHESSMAN
         if self.player_num == 2:
-            self.ai_class = aiGzy3.AI(self._lines, self.who_am_i)
+            self.ai_class = ai_2.AI(self._lines, self.who_am_i)
         elif self.player_num == 3:
-            self.ai_class = aiGst.AI(self._lines, self.who_am_i)
+            self.ai_class = ai_3.AI(self._lines, self.who_am_i)
             pass
 
         self.setWindowTitle('Omega White')
@@ -162,7 +165,7 @@ class BoardClient(BoardGUI):
         :return: None
         """
         self.who_am_i = YELLOW_CHESSMAN
-        self.ai_class = aiGst.AI(self._lines, self.who_am_i)
+        self.ai_class = ai_3.AI(self._lines, self.who_am_i)
 
         self.setWindowTitle('Omega Yellow')
         self.show()
