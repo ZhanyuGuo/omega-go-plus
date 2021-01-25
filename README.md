@@ -11,7 +11,7 @@
 
 #### 安装教程
 
-1.  xxxx
+1.  (-i https://pypi.douban.com/simple)
 2.  xxxx
 3.  xxxx
 
