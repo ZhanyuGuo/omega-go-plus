@@ -64,8 +64,8 @@ class BoardClient(BoardGUI):
 
         self.connected = False
 
-        self.players = 1
-        self.cur_players = 1
+        self.player_num = 1
+        self.cur_player_num = 1
 
         self.MainWindowUI.pushButtonRestart.hide()
 
@@ -107,14 +107,14 @@ class BoardClient(BoardGUI):
         pass
 
     def choose2(self):
-        self.players = 2
+        self.player_num = 2
         self.Choose0.close()
         self.Choose.show()
         self.ChooseUI.pushButton_3.hide()
         pass
 
     def choose3(self):
-        self.players = 3
+        self.player_num = 3
         self.Choose0.close()
         self.Choose.show()
         pass
@@ -126,9 +126,9 @@ class BoardClient(BoardGUI):
         :return: None
         """
         self.who_am_i = BLACK_CHESSMAN
-        if self.players == 2:
+        if self.player_num == 2:
             self.ai_class = aiGzy3.AI(self._lines, self.who_am_i)
-        elif self.players == 3:
+        elif self.player_num == 3:
             self.ai_class = aiGst.AI(self._lines, self.who_am_i)
             pass
 
@@ -144,9 +144,9 @@ class BoardClient(BoardGUI):
         :return: None
         """
         self.who_am_i = WHITE_CHESSMAN
-        if self.players == 2:
+        if self.player_num == 2:
             self.ai_class = aiGzy3.AI(self._lines, self.who_am_i)
-        elif self.players == 3:
+        elif self.player_num == 3:
             self.ai_class = aiGst.AI(self._lines, self.who_am_i)
             pass
 
@@ -185,7 +185,7 @@ class BoardClient(BoardGUI):
 
         :return: None
         """
-        if self.cur_players in [2, 3]:
+        if self.cur_player_num in [2, 3]:
             self.mode = 1
             self.MainWindowUI.labelMode.setText("当前模式：AI模式")
         pass
@@ -225,7 +225,7 @@ class BoardClient(BoardGUI):
         :return: None
         """
         if event.button() == Qt.LeftButton:
-            if self.connected and self.cur_players in [2, 3] and self.state not in [2,
+            if self.connected and self.cur_player_num in [2, 3] and self.state not in [2,
                                                                                     3] and self.board.cur_runner.name == self.who_am_i.name and self.mode == 0:
                 # If there is no winner, current round, player mode.
                 # 如果没有胜者、当前轮次、玩家模式
@@ -402,7 +402,7 @@ class BoardClient(BoardGUI):
 
                 # AI drop
                 # AI下子
-                if self.cur_players in [2,
+                if self.cur_player_num in [2,
                                         3] and self.mode == 1 and self.board.cur_runner.name == self.who_am_i.name and self.state not in [
                     2, 3]:
                     AI_point = self.ai_class.AI_drop()
@@ -474,7 +474,7 @@ class BoardClient(BoardGUI):
         rev = r.json()
         # print(rev, type(rev))
         self.id = rev[self.who_am_i.name]
-        self.cur_players = len(rev.keys())
+        self.cur_player_num = len(rev.keys())
         pass
 
     def getRestBoard(self):
@@ -505,7 +505,7 @@ class BoardClient(BoardGUI):
             self.board.cur_runner = BLACK_CHESSMAN
             self.board.history = []
         else:
-            if self.cur_players != 1:
+            if self.cur_player_num != 1:
                 self.board.cur_runner = self.getCurrent(rev['playerid'])
                 pass
 
@@ -522,12 +522,12 @@ class BoardClient(BoardGUI):
         pass
 
     def getCurrent(self, id_):
-        if self.cur_players == 2:
+        if self.cur_player_num == 2:
             if id_ == 1:
                 return WHITE_CHESSMAN
             else:
                 return BLACK_CHESSMAN
-        elif self.cur_players == 3:
+        elif self.cur_player_num == 3:
             if id_ == 1:
                 return WHITE_CHESSMAN
             elif id_ == 2:
@@ -559,7 +559,7 @@ class BoardClient(BoardGUI):
         r = requests.get(self.url + 'rest/play/report')
         rev = r.json()
         # print(rev)
-        if self.players == 2:
+        if self.player_num == 2:
             if sum(rev[0:2]):
                 self.history_rate = rev[self.who_am_i.value - 1] / sum(rev[0:2]) * 100
                 pass
@@ -570,7 +570,7 @@ class BoardClient(BoardGUI):
                 self.now_rate = 100 - rev[2]
                 pass
             pass
-        elif self.players == 3:
+        elif self.player_num == 3:
             if sum(rev[0:3]):
                 self.history_rate = rev[self.who_am_i.value - 1] / sum(rev[0:3]) * 100
                 pass
