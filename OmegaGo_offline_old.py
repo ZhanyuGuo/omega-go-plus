@@ -2,7 +2,7 @@
 # from aiGzy0 import *
 # from aiGzy1 import *
 from aiGzy3 import *
-import Choose
+from UI import Choose
 
 
 class BoardOffline(BoardGUI):

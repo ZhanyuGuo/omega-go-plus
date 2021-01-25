@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time    : 2021/1/25 12:00
+# @Time    : 2021/1/25 12:07
 # @Author  : Zhanyu Guo
 # @Email   : 942568052@qq.com
-# @File    : ai_1.py
+# @File    : ai_2.py
 # @Software: PyCharm
-from ChessAI1 import *
+from AI.ChessAI2 import *
 from basic import *
 
 

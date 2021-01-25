@@ -36,8 +36,7 @@ from functools import partial
 from PyQt5.QtCore import Qt, QRectF
 from PyQt5.QtWidgets import QMainWindow, QDialog, QApplication
 from PyQt5.QtGui import QPalette, QColor, QPainter, QPen, QBrush
-import MainWindow
-import Dialog
+from UI import Dialog, MainWindow
 
 # Chessboard window draws various parameters
 # 棋盘窗口绘制的各种参数

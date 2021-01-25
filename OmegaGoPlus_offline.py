@@ -5,10 +5,10 @@
 # @Email   : 942568052@qq.com
 # @File    : OmegaGoPlus_offline.py
 # @Software: PyCharm
-# from ai_0 import *
-from ai_1 import *
-# from ai_2 import *
-import Choose
+# from AI.ai_0 import *
+# from AI.ai_1 import *
+from AI.ai_2 import *
+from UI import Choose
 
 
 class BoardOffline(BoardGUI):
