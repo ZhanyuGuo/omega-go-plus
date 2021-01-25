@@ -5,9 +5,9 @@
 # @Email   : 942568052@qq.com
 # @File    : OmegaGoPlus_offline.py
 # @Software: PyCharm
-from ai_0 import *
-# from aiGzy1 import *
-# from aiGzy3 import *
+# from ai_0 import *
+from ai_1 import *
+# from ai_2 import *
 import Choose
 
 
@@ -97,7 +97,7 @@ class BoardOffline(BoardGUI):
                         pass
                     self.update()
 
-                    if self.board.winner is None and self.board.runner == self.board.getNextRunner(self.who_am_i):
+                    if self.board.winner is None and self.board.runner == self.ai:
                         self.ai_class.setBoard(self.board.getBoard())
                         ai_point = self.ai_class.AI_drop()
 
