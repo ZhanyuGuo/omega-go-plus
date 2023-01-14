@@ -100,27 +100,22 @@ class BoardClient(BoardGUI):
         self.history_rate = None
         self.now_rate = None
         self.MainWindowUI.pushButtonRegret.hide()
-        pass
 
     def restart(self):
         if self.state in [2, 3]:
             self.postRestBoard(-1, -1)
             self.MainWindowUI.pushButtonRestart.hide()
-            pass
-        pass
 
     def choose2(self):
         self.player_num = 2
         self.Choose0.close()
         self.Choose.show()
         self.ChooseUI.pushButton_3.hide()
-        pass
 
     def choose3(self):
         self.player_num = 3
         self.Choose0.close()
         self.Choose.show()
-        pass
 
     def chooseBlack(self):
         """
@@ -133,12 +128,10 @@ class BoardClient(BoardGUI):
             self.ai_class = ai_2.AI(self._lines, self.who_am_i)
         elif self.player_num == 3:
             self.ai_class = ai_3.AI(self._lines, self.who_am_i)
-            pass
 
-        self.setWindowTitle('Omega Black')
+        self.setWindowTitle("Omega Black")
         self.show()
         self.Choose.close()
-        pass
 
     def chooseWhite(self):
         """
@@ -151,12 +144,10 @@ class BoardClient(BoardGUI):
             self.ai_class = ai_2.AI(self._lines, self.who_am_i)
         elif self.player_num == 3:
             self.ai_class = ai_3.AI(self._lines, self.who_am_i)
-            pass
 
-        self.setWindowTitle('Omega White')
+        self.setWindowTitle("Omega White")
         self.show()
         self.Choose.close()
-        pass
 
     def chooseYellow(self):
         """
@@ -167,10 +158,9 @@ class BoardClient(BoardGUI):
         self.who_am_i = YELLOW_CHESSMAN
         self.ai_class = ai_3.AI(self._lines, self.who_am_i)
 
-        self.setWindowTitle('Omega Yellow')
+        self.setWindowTitle("Omega Yellow")
         self.show()
         self.Choose.close()
-        pass
 
     def setPlayerMode(self):
         """
@@ -180,7 +170,6 @@ class BoardClient(BoardGUI):
         """
         self.mode = 0
         self.MainWindowUI.labelMode.setText("当前模式：玩家模式")
-        pass
 
     def setAIMode(self):
         """
@@ -191,7 +180,6 @@ class BoardClient(BoardGUI):
         if self.cur_player_num in [2, 3]:
             self.mode = 1
             self.MainWindowUI.labelMode.setText("当前模式：AI模式")
-        pass
 
     def regret(self):
         """
@@ -228,8 +216,13 @@ class BoardClient(BoardGUI):
         :return: None
         """
         if event.button() == Qt.LeftButton:
-            if self.connected and self.cur_player_num in [2, 3] and self.state not in [2,
-                                                                                    3] and self.board.cur_runner.name == self.who_am_i.name and self.mode == 0:
+            if (
+                self.connected
+                and self.cur_player_num in [2, 3]
+                and self.state not in [2, 3]
+                and self.board.cur_runner.name == self.who_am_i.name
+                and self.mode == 0
+            ):
                 # If there is no winner, current round, player mode.
                 # 如果没有胜者、当前轮次、玩家模式
                 mouse_pos = [event.pos().x(), event.pos().y()]
@@ -244,15 +237,9 @@ class BoardClient(BoardGUI):
                     if self.board.canDrop(click_point):
                         self.board.drop(self.board.cur_runner, click_point)
                         self.postRestBoard(click_point.x, click_point.y)
-                        pass
-                    pass
                 else:
-                    print('超过棋盘范围...')
-                    pass
+                    print("超过棋盘范围...")
                 self.update()
-                pass
-            pass
-        pass
 
     def paintEvent(self, event):
         """
@@ -275,17 +262,15 @@ class BoardClient(BoardGUI):
         if self.state == 3 and not self.notre:
             self.Dialog.show()
             self.MainWindowUI.pushButtonRestart.show()
-            pass
 
         if self.history_rate is not None:
-            self.MainWindowUI.labelHistoryRate.setText("历史胜率：%.2f%%" % self.history_rate)
-            pass
+            self.MainWindowUI.labelHistoryRate.setText(
+                "历史胜率：%.2f%%" % self.history_rate
+            )
         if self.now_rate is not None:
             self.MainWindowUI.labelNowRate.setText("实时胜率：%.2f%%" % self.now_rate)
-            pass
 
         qp.end()
-        pass
 
     def drawWho(self, qp):
         color = self.who_am_i.color
@@ -295,7 +280,6 @@ class BoardClient(BoardGUI):
         qp.setBrush(brush)
 
         qp.drawEllipse(740, 30, STONE_R2 * 2, STONE_R2 * 2)
-        pass
 
     def rerun(self):
         """
@@ -312,8 +296,6 @@ class BoardClient(BoardGUI):
         self.getRestPlay()  # state <- new_state
         self.getRestActionLast()
 
-        pass
-
     def notrerun(self):
         """
         Callback of Dialog Cancel button
@@ -325,7 +307,6 @@ class BoardClient(BoardGUI):
         # self.postRestBoard(-1, -1)
         # # 更新游戏状态
         # self.getRestPlay()  # state <- new_state
-        pass
 
     def closeEvent(self, event):
         """
@@ -338,8 +319,6 @@ class BoardClient(BoardGUI):
         # 提交重置棋盘申请
         if self.connected:
             self.postRestBoard(-2, -2)
-            pass
-        pass
 
     def connectBtnFn(self, ui):
         """
@@ -350,9 +329,8 @@ class BoardClient(BoardGUI):
         """
         if not self.connected:
             dataIn = ui.lineEditServerIP.text()
-            if dataIn != '':
-                self.url = f'http://{dataIn}:5000/'
-                pass
+            if dataIn != "":
+                self.url = f"http://{dataIn}:5000/"
             ui.labelConnectInfo.setText(self.url)
             self.postRestPlayer()
             self.getRestPlayer()
@@ -362,15 +340,11 @@ class BoardClient(BoardGUI):
             _thread.start_new_thread(self.operate_thread, ())
             # _thread.start_new_thread(self.update_thread, ())
             self.connected = True
-            pass
-        pass
 
     def update_thread(self):
         while True:
             time.sleep(0.1)
             self.update()
-            pass
-        pass
 
     def operate_thread(self):
         """
@@ -401,21 +375,24 @@ class BoardClient(BoardGUI):
                 # self.update()
                 if self.state not in [2, 3]:
                     self.notre = False
-                    pass
 
                 # AI drop
                 # AI下子
-                if self.cur_player_num in [2,
-                                        3] and self.mode == 1 and self.board.cur_runner.name == self.who_am_i.name and self.state not in [
-                    2, 3]:
+                if (
+                    self.cur_player_num in [2, 3]
+                    and self.mode == 1
+                    and self.board.cur_runner.name == self.who_am_i.name
+                    and self.state not in [2, 3]
+                ):
                     AI_point = self.ai_class.AI_drop()
                     self.board.drop(self.who_am_i, AI_point)
-                    self.board.cur_runner = self.board.getNextRunner(self.board.cur_runner)
+                    self.board.cur_runner = self.board.getNextRunner(
+                        self.board.cur_runner
+                    )
 
                     # Submit
                     # 提交
                     self.postRestBoard(AI_point.x, AI_point.y)
-                    pass
 
                 # Update the board
                 # 更新棋盘
@@ -431,11 +408,8 @@ class BoardClient(BoardGUI):
 
                 self.update()
             except Exception as e:
-                self.MainWindowUI.labelConnectInfo.setText('连接失败...')
+                self.MainWindowUI.labelConnectInfo.setText("连接失败...")
                 print(e)
-                pass
-            pass
-        pass
 
     def getRestPlay(self):
         """
@@ -443,11 +417,10 @@ class BoardClient(BoardGUI):
 
         :return: None
         """
-        r = requests.get(self.url + 'rest/play')
+        r = requests.get(self.url + "rest/play")
         rev = r.json()
         # print(rev, type(rev))
         self.state = rev
-        pass
 
     def postRestPlayer(self):
         """
@@ -457,15 +430,14 @@ class BoardClient(BoardGUI):
         """
         try:
             post = dict()
-            post['ip'] = self.getLocalIP()
-            post['color'] = self.who_am_i.name
-            r1 = requests.post(self.url + 'rest/player', data=post)
+            post["ip"] = self.getLocalIP()
+            post["color"] = self.who_am_i.name
+            r1 = requests.post(self.url + "rest/player", data=post)
             rev = r1.json()
             # print(rev, type(rev))
         except Exception as ee:
-            self.MainWindowUI.label_3.setText('连接失败...')
+            self.MainWindowUI.label_3.setText("连接失败...")
             print(ee)
-        pass
 
     def getRestPlayer(self):
         """
@@ -473,12 +445,11 @@ class BoardClient(BoardGUI):
 
         :return: None
         """
-        r = requests.get(self.url + 'rest/player')
+        r = requests.get(self.url + "rest/player")
         rev = r.json()
         # print(rev, type(rev))
         self.id = rev[self.who_am_i.name]
         self.cur_player_num = len(rev.keys())
-        pass
 
     def getRestBoard(self):
         """
@@ -486,13 +457,12 @@ class BoardClient(BoardGUI):
 
         :return: None
         """
-        r = requests.get(self.url + 'rest/board')
+        r = requests.get(self.url + "rest/board")
         rev = r.json()
         # print(rev, type(rev))
-        new_board = rev['board']
+        new_board = rev["board"]
         self.board.setBoard(new_board)
         self.ai_class.setBoard(new_board)
-        pass
 
     def getRestActionLast(self):
         """
@@ -500,7 +470,7 @@ class BoardClient(BoardGUI):
 
         :return: None
         """
-        r = requests.get(self.url + 'rest/action/last')
+        r = requests.get(self.url + "rest/action/last")
         rev = r.json()
         # print(rev, type(rev))
         # error
@@ -509,20 +479,14 @@ class BoardClient(BoardGUI):
             self.board.history = []
         else:
             if self.cur_player_num != 1:
-                self.board.cur_runner = self.getCurrent(rev['playerid'])
-                pass
+                self.board.cur_runner = self.getCurrent(rev["playerid"])
 
-            self.board.last = Point(rev['x'], rev['y'])
+            self.board.last = Point(rev["x"], rev["y"])
             if not self.board.history:
                 self.board.history.append(self.board.last)
-                pass
 
             if self.board.last != self.board.history[-1]:
                 self.board.history.append(self.board.last)
-                pass
-
-            pass
-        pass
 
     def getCurrent(self, id_):
         if self.cur_player_num == 2:
@@ -537,8 +501,6 @@ class BoardClient(BoardGUI):
                 return YELLOW_CHESSMAN
             else:
                 return BLACK_CHESSMAN
-            pass
-        pass
 
     def postRestBoard(self, x, y):
         """
@@ -549,34 +511,29 @@ class BoardClient(BoardGUI):
         :return: None
         """
         send = dict()
-        send['id'] = self.id
-        send['x'] = x
-        send['y'] = y
-        send['color'] = self.who_am_i.name
-        r = requests.post(self.url + 'rest/board', data=send)
+        send["id"] = self.id
+        send["x"] = x
+        send["y"] = y
+        send["color"] = self.who_am_i.name
+        r = requests.post(self.url + "rest/board", data=send)
         # rev = r.json()
         # print(rev, type(rev))
-        pass
 
     def getRestPlayReport(self):
-        r = requests.get(self.url + 'rest/play/report')
+        r = requests.get(self.url + "rest/play/report")
         rev = r.json()
         # print(rev)
         if self.player_num == 2:
             if sum(rev[0:2]):
                 self.history_rate = rev[self.who_am_i.value - 1] / sum(rev[0:2]) * 100
-                pass
 
             if self.who_am_i == BLACK_CHESSMAN:
                 self.now_rate = rev[2]
             elif self.who_am_i == WHITE_CHESSMAN:
                 self.now_rate = 100 - rev[2]
-                pass
-            pass
         elif self.player_num == 3:
             if sum(rev[0:3]):
                 self.history_rate = rev[self.who_am_i.value - 1] / sum(rev[0:3]) * 100
-                pass
 
             if self.who_am_i == BLACK_CHESSMAN:
                 self.now_rate = rev[3]
@@ -584,19 +541,12 @@ class BoardClient(BoardGUI):
                 self.now_rate = rev[4]
             else:
                 self.now_rate = 100 - (rev[3] + rev[4])
-                pass
-            pass
-        pass
-
-    pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     try:
         client = QApplication(sys.argv)
         board_client = BoardClient(LINES)
         sys.exit(client.exec_())
     except Exception as e:
         print(e)
-        pass
-    pass

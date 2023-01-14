@@ -88,16 +88,13 @@ class Chessman:
         self.name = name
         self.value = value
         self.color = color
-        pass
-
-    pass
 
 
 # Three roles
 # 三种角色
-BLACK_CHESSMAN = Chessman('black', 1, BLACK_STONE_COLOR)
-WHITE_CHESSMAN = Chessman('white', 2, WHITE_STONE_COLOR)
-YELLOW_CHESSMAN = Chessman('yellow', 3, YELLOW_STONE_COLOR)
+BLACK_CHESSMAN = Chessman("black", 1, BLACK_STONE_COLOR)
+WHITE_CHESSMAN = Chessman("white", 2, WHITE_STONE_COLOR)
+YELLOW_CHESSMAN = Chessman("yellow", 3, YELLOW_STONE_COLOR)
 
 
 class Point:
@@ -114,9 +111,6 @@ class Point:
         """
         self.x = x
         self.y = y
-        pass
-
-    pass
 
 
 class Board:
@@ -151,7 +145,6 @@ class Board:
         # Number of players (int).
         # 玩家数目（int）
         self.player_num = 2
-        pass
 
     def getBoard(self):
         """
@@ -169,7 +162,6 @@ class Board:
         :return: None
         """
         self._board = new_board
-        pass
 
     def canDrop(self, point):
         """
@@ -194,9 +186,8 @@ class Board:
         # Determine victory.
         # 判断胜利
         if self.win(point):
-            print(f'{chessman.name} win!')
+            print(f"{chessman.name} win!")
             return chessman
-        pass
 
     def win(self, point):
         """
@@ -209,8 +200,6 @@ class Board:
         for item in offset:
             if self.getCountOnDirection(point, value, item[0], item[1]) >= 5:
                 return True
-            pass
-        pass
 
     def getCountOnDirection(self, point, value, x_offset, y_offset):
         """
@@ -226,22 +215,26 @@ class Board:
         for step in range(1, 5):
             x = point.x + step * x_offset
             y = point.y + step * y_offset
-            if 0 <= x < self._lines and 0 <= y < self._lines and self._board[y][x] == value:
+            if (
+                0 <= x < self._lines
+                and 0 <= y < self._lines
+                and self._board[y][x] == value
+            ):
                 count += 1
             else:
                 break
-                pass
-            pass
 
         for step in range(1, 5):
             x = point.x - step * x_offset
             y = point.y - step * y_offset
-            if 0 <= x < self._lines and 0 <= y < self._lines and self._board[y][x] == value:
+            if (
+                0 <= x < self._lines
+                and 0 <= y < self._lines
+                and self._board[y][x] == value
+            ):
                 count += 1
             else:
                 break
-                pass
-            pass
 
         return count
 
@@ -257,7 +250,6 @@ class Board:
                 return WHITE_CHESSMAN
             else:
                 return BLACK_CHESSMAN
-            pass
 
         elif self.player_num == 3:
             if runner == BLACK_CHESSMAN:
@@ -266,10 +258,6 @@ class Board:
                 return YELLOW_CHESSMAN
             elif runner == YELLOW_CHESSMAN:
                 return BLACK_CHESSMAN
-            pass
-        pass
-
-    pass
 
 
 class BoardGUI(QMainWindow):
@@ -307,7 +295,7 @@ class BoardGUI(QMainWindow):
 
         # The server address and port number (default) can be entered later.
         # 服务器地址与端口号（默认值），后续可以输入
-        self.url = 'http://127.0.0.1:5000/'
+        self.url = "http://127.0.0.1:5000/"
 
         # self.MainWindowUI.lineEditLocalIP.setText(self.getLocalIP())
 
@@ -326,7 +314,6 @@ class BoardGUI(QMainWindow):
         # 重启
         self.DialogUI.buttonBox.accepted.connect(self.rerun)
         self.DialogUI.buttonBox.rejected.connect(self.notrerun)
-        pass
 
     def rerun(self):
         """
@@ -337,7 +324,6 @@ class BoardGUI(QMainWindow):
         # Restart a board
         # 重启一个棋盘
         self.board = Board(self._lines)
-        pass
 
     def notrerun(self):
         """
@@ -347,7 +333,6 @@ class BoardGUI(QMainWindow):
         """
         # 使窗口不再弹出
         self.board.winner = None
-        pass
 
     def regret(self):
         """
@@ -365,10 +350,7 @@ class BoardGUI(QMainWindow):
             self.board.runner = self.board.getNextRunner(self.board.runner)
             self.update()
         else:
-            print('Stack is empty, can not regret!')
-            pass
-
-        pass
+            print("Stack is empty, can not regret!")
 
     def connectBtnFn(self, ui):
         """
@@ -379,15 +361,13 @@ class BoardGUI(QMainWindow):
         """
         dataIn = ui.lineEditServerIP.text()
 
-        if dataIn != '':
-            self.url = f'http://{dataIn}:5000/'
-            pass
+        if dataIn != "":
+            self.url = f"http://{dataIn}:5000/"
         # else:
         #     self.url = 'http://127.0.0.1:5000/'
         #     pass
 
         ui.labelConnectInfo.setText(self.url)
-        pass
 
     def getLocalIP(self):
         """
@@ -397,11 +377,10 @@ class BoardGUI(QMainWindow):
         """
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         try:
-            s.connect(('8.8.8.8', 80))
+            s.connect(("8.8.8.8", 80))
             ip = s.getsockname()[0]
         finally:
             s.close()
-            pass
         return ip
 
     # Drawing event
@@ -424,14 +403,10 @@ class BoardGUI(QMainWindow):
         self.drawStones(qp)
 
         if self.board.winner is not None:
-            self.DialogUI.label.setText(
-                f'{self.board.winner.name} 胜利，游戏结束，是否重新开始？'
-            )
+            self.DialogUI.label.setText(f"{self.board.winner.name} 胜利，游戏结束，是否重新开始？")
             self.Dialog.show()
-            pass
 
         qp.end()
-        pass
 
     def drawBoard(self, qp):
         """
@@ -447,9 +422,6 @@ class BoardGUI(QMainWindow):
 
         if self._lines == 19:
             self.drawBoardPoints(qp)
-            pass
-
-        pass
 
     def drawLines(self, qp):
         """
@@ -465,21 +437,21 @@ class BoardGUI(QMainWindow):
         # 行
         for i in range(LINES):
             qp.drawLine(
-                START_X, START_Y + SIZE * i,
-                START_X + SIZE * (LINES - 1), START_Y + SIZE * i
+                START_X,
+                START_Y + SIZE * i,
+                START_X + SIZE * (LINES - 1),
+                START_Y + SIZE * i,
             )
-            pass
 
         # Columns
         # 列
         for j in range(LINES):
             qp.drawLine(
-                START_X + SIZE * j, START_Y,
-                START_X + SIZE * j, START_Y + SIZE * (LINES - 1)
+                START_X + SIZE * j,
+                START_Y,
+                START_X + SIZE * j,
+                START_Y + SIZE * (LINES - 1),
             )
-            pass
-
-        pass
 
     def drawBoardPoints(self, qp):
         """
@@ -495,14 +467,9 @@ class BoardGUI(QMainWindow):
                     r = 5
                 else:
                     r = 3
-                    pass
                 qp.drawEllipse(
-                    START_X + SIZE * i - r, START_Y + SIZE * j - r,
-                    r * 2, r * 2
+                    START_X + SIZE * i - r, START_Y + SIZE * j - r, r * 2, r * 2
                 )
-                pass
-            pass
-        pass
 
     def drawStones(self, qp):
         """
@@ -534,10 +501,11 @@ class BoardGUI(QMainWindow):
             qp.setBrush(brush)
 
             qp.drawRect(
-                START_X + SIZE * last.x - STONE_R1, START_Y + SIZE * last.y - STONE_R1,
-                STONE_R1 * 2, STONE_R1 * 2
+                START_X + SIZE * last.x - STONE_R1,
+                START_Y + SIZE * last.y - STONE_R1,
+                STONE_R1 * 2,
+                STONE_R1 * 2,
             )
-            pass
 
         # Walk through each row and column to find the existing pieces and draw them.
         # 每行每列遍历寻找存在的棋子并画出
@@ -549,9 +517,6 @@ class BoardGUI(QMainWindow):
                     self.drawStone(qp, Point(j, i), WHITE_CHESSMAN.color)
                 elif cell == YELLOW_CHESSMAN.value:
                     self.drawStone(qp, Point(j, i), YELLOW_CHESSMAN.color)
-                    pass
-                pass
-            pass
 
         # The game is over, and the chess history is drawn
         # 游戏结束，绘制下棋历史记录
@@ -562,17 +527,15 @@ class BoardGUI(QMainWindow):
                     pen = QPen(BLACK_STONE_COLOR, LINE_WIDTH, Qt.SolidLine)
                 else:
                     pen = QPen(WHITE_STONE_COLOR, LINE_WIDTH, Qt.SolidLine)
-                    pass
                 qp.setPen(pen)
 
                 rect = QRectF(
-                    START_X + SIZE * point.x - STONE_R1, START_Y + SIZE * point.y - STONE_R1,
-                    STONE_R1 * 2, STONE_R1 * 2
+                    START_X + SIZE * point.x - STONE_R1,
+                    START_Y + SIZE * point.y - STONE_R1,
+                    STONE_R1 * 2,
+                    STONE_R1 * 2,
                 )
                 qp.drawText(rect, Qt.AlignCenter, str(num))
-                pass
-            pass
-        pass
 
     def drawStone(self, qp, point, stone_color):
         """
@@ -587,10 +550,11 @@ class BoardGUI(QMainWindow):
         qp.setPen(pen)
         qp.setBrush(stone_color)
         qp.drawEllipse(
-            START_X + SIZE * point.x - STONE_R1, START_Y + SIZE * point.y - STONE_R1,
-            STONE_R1 * 2, STONE_R1 * 2
+            START_X + SIZE * point.x - STONE_R1,
+            START_Y + SIZE * point.y - STONE_R1,
+            STONE_R1 * 2,
+            STONE_R1 * 2,
         )
-        pass
 
     # Mouse event
     # 鼠标事件
@@ -614,17 +578,13 @@ class BoardGUI(QMainWindow):
                 # 在棋盘范围内
                 if click_point is not None:
                     if self.board.canDrop(click_point):
-                        self.board.winner = self.board.drop(self.board.runner, click_point)
+                        self.board.winner = self.board.drop(
+                            self.board.runner, click_point
+                        )
                         self.board.runner = self.board.getNextRunner(self.board.runner)
-                        pass
-                    pass
                 else:
-                    print('超过棋盘范围...')
-                    pass
+                    print("超过棋盘范围...")
                 self.update()
-                pass
-            pass
-        pass
 
     def getClickPoint(self, click_pos):
         """
@@ -641,19 +601,15 @@ class BoardGUI(QMainWindow):
         y = pos_y // SIZE
         if pos_x % SIZE > SIZE / 2:
             x += 1
-            pass
         if pos_y % SIZE > SIZE / 2:
             y += 1
-            pass
         if x >= LINES or y >= LINES:
             return None
 
         return Point(x, y)
 
-    pass
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     try:
         app = QApplication(sys.argv)
         board_ui = BoardGUI(LINES)
@@ -668,8 +624,5 @@ if __name__ == '__main__':
         board_ui.show()
 
         sys.exit(app.exec_())
-        pass
     except Exception as e:
         print(e)
-        pass
-    pass

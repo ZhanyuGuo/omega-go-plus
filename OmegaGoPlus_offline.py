@@ -56,7 +56,6 @@ class BoardOffline(BoardGUI):
         self.ChooseUI.pushButton_2.clicked.connect(self.chooseWhite)
         self.ChooseUI.pushButton_3.hide()
         self.Choose.show()
-        pass
 
     def chooseBlack(self):
         """
@@ -67,10 +66,9 @@ class BoardOffline(BoardGUI):
         self.who_am_i = BLACK_CHESSMAN
         self.ai = WHITE_CHESSMAN
         self.ai_class = AI(self._lines, self.ai)
-        self.setWindowTitle('Omega Black')
+        self.setWindowTitle("Omega Black")
         self.show()
         self.Choose.close()
-        pass
 
     def chooseWhite(self):
         """
@@ -81,7 +79,7 @@ class BoardOffline(BoardGUI):
         self.who_am_i = WHITE_CHESSMAN
         self.ai = BLACK_CHESSMAN
         self.ai_class = AI(self._lines, self.ai)
-        self.setWindowTitle('Omega White')
+        self.setWindowTitle("Omega White")
         self.show()
         self.Choose.close()
 
@@ -90,7 +88,6 @@ class BoardOffline(BoardGUI):
         self.board.winner = self.board.drop(self.board.runner, ai_point)
         self.board.runner = self.board.getNextRunner(self.board.runner)
         self.update()
-        pass
 
     def mousePressEvent(self, event):
         """
@@ -113,13 +110,14 @@ class BoardOffline(BoardGUI):
                     # 在棋盘范围内
                     if click_point is not None:
                         if self.board.canDrop(click_point):
-                            self.board.winner = self.board.drop(self.board.runner, click_point)
-                            self.board.runner = self.board.getNextRunner(self.board.runner)
-                            pass
-                        pass
+                            self.board.winner = self.board.drop(
+                                self.board.runner, click_point
+                            )
+                            self.board.runner = self.board.getNextRunner(
+                                self.board.runner
+                            )
                     else:
-                        print('超过棋盘范围...')
-                        pass
+                        print("超过棋盘范围...")
                     self.update()
 
                     if self.board.winner is None and self.board.runner == self.ai:
@@ -129,11 +127,6 @@ class BoardOffline(BoardGUI):
                         self.board.winner = self.board.drop(self.board.runner, ai_point)
                         self.board.runner = self.board.getNextRunner(self.board.runner)
                         self.update()
-                        pass
-                    pass
-                pass
-            pass
-        pass
 
     def rerun(self):
         super(BoardOffline, self).rerun()
@@ -143,13 +136,9 @@ class BoardOffline(BoardGUI):
             self.board.winner = self.board.drop(self.board.runner, ai_point)
             self.board.runner = self.board.getNextRunner(self.board.runner)
             self.update()
-            pass
-        pass
-
-    pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app = QApplication(sys.argv)
     test = BoardOffline(LINES)
     test.MainWindowUI.widget.hide()
@@ -157,4 +146,3 @@ if __name__ == '__main__':
     test.MainWindowUI.labelHistoryRate.hide()
     test.MainWindowUI.labelWhoAmI.hide()
     sys.exit(app.exec_())
-    pass

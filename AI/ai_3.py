@@ -5,7 +5,7 @@
 # @Email   : 942568052@qq.com
 # @File    : ai_3.py
 # @Software: PyCharm
-from ChessAI3 import *
+from AI.ChessAI3 import *
 from basic import *
 
 
