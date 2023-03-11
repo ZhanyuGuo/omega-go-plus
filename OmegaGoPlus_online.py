@@ -249,7 +249,7 @@ class BoardClient(BoardGUI):
         :return: None
         """
         qp = QPainter(self)
-        qp.begin(self)
+        # qp.begin(self)
 
         # anti-aliasing
         # 抗锯齿
@@ -270,7 +270,7 @@ class BoardClient(BoardGUI):
         if self.now_rate is not None:
             self.MainWindowUI.labelNowRate.setText("实时胜率：%.2f%%" % self.now_rate)
 
-        qp.end()
+        # qp.end()
 
     def drawWho(self, qp):
         color = self.who_am_i.color

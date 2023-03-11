@@ -393,7 +393,7 @@ class BoardGUI(QMainWindow):
         :return: None
         """
         qp = QPainter(self)
-        qp.begin(self)
+        # qp.begin(self)
 
         # anti-aliasing
         # 抗锯齿
@@ -406,7 +406,7 @@ class BoardGUI(QMainWindow):
             self.DialogUI.label.setText(f"{self.board.winner.name} 胜利，游戏结束，是否重新开始？")
             self.Dialog.show()
 
-        qp.end()
+        # qp.end()
 
     def drawBoard(self, qp):
         """
